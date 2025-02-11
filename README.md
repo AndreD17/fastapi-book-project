@@ -166,6 +166,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```bash
 pip install gunicorn
 ```
+
 Create a Gunicorn service file:
 ```bash
 sudo nano /etc/systemd/system/fastapi.service
@@ -194,7 +195,6 @@ sudo systemctl daemon-reload
 sudo systemctl enable fastapi
 sudo systemctl start fastapi
 ```
-
 ### 7️⃣ Configure Nginx as a Reverse Proxy
 ```bash
 sudo nano /etc/nginx/sites-available/fastapi
@@ -245,7 +245,5 @@ sudo systemctl restart fastapi
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
 
-For support, please open an issue in the GitHub repository.
 
