@@ -137,13 +137,13 @@ Log into your VPS using SSH:
 ssh user@your-vps-ip
 ```
 
-### 2️⃣ Update & Install Dependencies
+## 2️⃣ Update & Install Dependencies
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y python3-pip python3-venv nginx git
 ```
 
-### 3️⃣ Clone Your Repository
+## 3️⃣ Clone Your Repository
 ```bash
 git clone https://github.com/YOUR_GITHUB_USERNAME/fastapi-book-project.git
 cd fastapi-book-project
@@ -164,9 +164,9 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 ### 6️⃣ Use a Process Manager (Gunicorn + Supervisor)
 ```bash
+
 pip install gunicorn
 ```
-
 Create a Gunicorn service file:
 ```bash
 sudo nano /etc/systemd/system/fastapi.service
