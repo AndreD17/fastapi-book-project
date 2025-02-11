@@ -71,7 +71,7 @@ pip install -r requirements.txt
 1. Start the server:
 
 ```bash
-uvicorn main:app
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 2. Access the API documentation:
@@ -129,6 +129,110 @@ The API includes proper error handling for:
 - Invalid genre types
 - Malformed requests
 
+## Deployment Guide
+
+### 1️⃣ Connect to Your VPS
+Log into your VPS using SSH:
+```bash
+ssh user@your-vps-ip
+```
+
+### 2️⃣ Update & Install Dependencies
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y python3-pip python3-venv nginx git
+```
+
+### 3️⃣ Clone Your Repository
+```bash
+git clone https://github.com/YOUR_GITHUB_USERNAME/fastapi-book-project.git
+cd fastapi-book-project
+```
+
+### 4️⃣ Set Up a Virtual Environment
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+### 5️⃣ Run the FastAPI App
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+### 6️⃣ Use a Process Manager (Gunicorn + Supervisor)
+```bash
+pip install gunicorn
+```
+Create a Gunicorn service file:
+```bash
+sudo nano /etc/systemd/system/fastapi.service
+```
+Add the following:
+```
+[Unit]
+Description=FastAPI Application
+After=network.target
+
+[Service]
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/fastapi-book-project
+ExecStart=/home/ubuntu/fastapi-book-project/venv/bin/gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8000
+
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+```
+Reload systemd and start the service:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable fastapi
+sudo systemctl start fastapi
+```
+
+### 7️⃣ Configure Nginx as a Reverse Proxy
+```bash
+sudo nano /etc/nginx/sites-available/fastapi
+```
+Add:
+```
+server {
+    listen 80;
+    server_name yourdomain.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
+Enable it:
+```bash
+sudo ln -s /etc/nginx/sites-available/fastapi /etc/nginx/sites-enabled
+sudo systemctl restart nginx
+```
+
+### 8️⃣ Secure Server with SSL (Optional)
+```bash
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+sudo systemctl restart nginx
+```
+
+### 9️⃣ Automate Deployment with Git
+```bash
+cd /home/ubuntu/fastapi-book-project
+git pull origin main
+sudo systemctl restart fastapi
+```
+
 ## Contributing
 
 1. Fork the repository
@@ -144,3 +248,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 For support, please open an issue in the GitHub repository.
+
