@@ -1,10 +1,10 @@
 # FastAPI Book  API
 
-## Introduction
+## Introduction/Overview
 
 This project is a RESTful API built with FastAPI for managing a book collection. It provides comprehensive CRUD (Create, Read, Update, Delete) operations for books with proper error handling, input validation, and documentation.
 
-## Characteristics
+## Characteristics/features
 
 - 📚 Book management (CRUD operations)
 - ✅ Input validation using Pydantic models
@@ -20,10 +20,10 @@ fastapi-book-project/
 ├── api/
 │   ├── db/
 │   │   ├── __init__.py
-│   │   └── schemas.py      # Data models and in-memory database
+│   │   └── schemas.py      
 │   ├── routes/
 │   │   ├── __init__.py
-│   │   └── books.py        # Book route handlers
+│   │   └── books.py       
 │   └── router.py           # API router configuration
 ├── core/
 │   ├── __init__.py
@@ -73,6 +73,7 @@ uvicorn main:app
 2. Access the API documentation:
 
 - Swagger UI: http://localhost:8000/docs
+
 - ReDoc: http://localhost:8000/redoc
 
 ## API Endpoints
@@ -117,16 +118,8 @@ Available genres:
 pytest
 ```
 
-## Error Handling
 
-The API includes proper error handling for:
 
-- Non-existent books
-- Invalid book IDs
-- Invalid genre types
-- Malformed requests
-
-## Deployment Guide
 
 ### 1️⃣ Connect to Your VPS
 Log into your VPS using SSH:
