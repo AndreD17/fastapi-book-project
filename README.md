@@ -20,11 +20,11 @@ fastapi-book-project/
 ├── api/
 │   ├── db/
 │   │   ├── __init__.py
-│   │   └── schemas.py      # Data models and in-memory database
+│   │   └── schemas.py      # Data models
 │   ├── routes/
 │   │   ├── __init__.py
-│   │   └── books.py        # Book route handlers
-│   └── router.py           # API router configuration
+│   │   └── books.py        # Book route 
+│   └── router.py           # API router 
 ├── core/
 │   ├── __init__.py
 │   └── config.py           # Application settings
