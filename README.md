@@ -1,10 +1,10 @@
 # FastAPI Book Management API
 
-## Overview
+## Overview/ Introduction
 
 This project is a RESTful API built with FastAPI for managing a book collection. It provides comprehensive CRUD (Create, Read, Update, Delete) operations for books with proper error handling, input validation, and documentation.
 
-## Features
+## Features/ characteristics
 
 - 📚 Book management (CRUD operations)
 - ✅ Input validation using Pydantic models
