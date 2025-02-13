@@ -36,7 +36,7 @@ fastapi-book-project/
 └── README.md
 ```
 
-## Technologies Used
+## Technologies 
 
 - Python 3.12
 - FastAPI
@@ -44,7 +44,7 @@ fastapi-book-project/
 - pytest
 - uvicorn
 
-## Installation
+## Installations
 
 1. Clone the repository:
 
