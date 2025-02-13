@@ -18,10 +18,10 @@ jobs:
       - name: Deploy Application
         uses: appleboy/ssh-action@v0.1.7
         with:
-          host: ${{ FastApi-key }}  # Use GitHub Secret for EC2 IP
+          host: 13.60.81.253 # Use GitHub Secret for EC2 IP
           username: ubuntu  # Default user for AWS EC2
           key: ${{ 
-ssh -i /home/cp/.ssh/FastApi-key.pem ubuntu@ec2-13-60-81-253.eu-north-1.compute.amazonaws.com}}  # Private key stored in GitHub Secrets
+ssh -i /home/cp/.ssh/FastApi-key.pem ubuntu@ec2-13-60-81-253.eu-north-1.compute.amazonaws.com}}  # Private key stored in GitHubSecrets
           script: |
             cd ~/fastapi-book-project
             git pull origin main
