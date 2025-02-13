@@ -44,7 +44,7 @@ fastapi-book-project/
 - pytest
 - uvicorn
 
-## Installation
+## Installations
 
 1. Clone the repository:
 
