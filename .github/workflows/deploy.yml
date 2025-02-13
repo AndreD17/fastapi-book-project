@@ -20,7 +20,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}  # Store your EC2 IP in GitHub Secrets
           username: ubuntu  # Default user for AWS EC2
-          key: ${{ FastApi-key.EC2_PRIVATE_KEY }}  # Store your private key in GitHub Secrets
+          key: ${{ secrets-key.EC2_PRIVATE_KEY }}  # Store your private key in GitHub Secrets
           script: |
             cd ~/fastapi-book-project
             git pull origin main
