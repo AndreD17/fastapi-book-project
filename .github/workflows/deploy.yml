@@ -16,5 +16,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy Application
-        run: |
-          ssh user@your-server-ip "cd /path/to/project && git pull && systemctl restart fastapi"
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ FastApi-key }}  # Use GitHub Secret for EC2 IP
+          username: ubuntu  # Default user for AWS EC2
+          key: ${{ 
+ssh -i /home/cp/.ssh/FastApi-key.pem ubuntu@ec2-13-60-81-253.eu-north-1.compute.amazonaws.com}}  # Private key stored in GitHub Secrets
+          script: |
+            cd ~/fastapi-book-project
+            git pull origin main
+            source venv/bin/activate
+            pip install -r requirements.txt
+            sudo systemctl restart fastapi
