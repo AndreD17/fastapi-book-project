@@ -40,7 +40,7 @@ async def get_book_by_id(book_id: int) -> Book:
     book = db.get_book(book_id)
 
     if not book:
-        raise HTTPException(status_code=404, detail="Not found")
+        raise HTTPException(status_code=404, detail="Book Not found")
 
     return book
 
