@@ -38,10 +38,17 @@ db.books = {
 
 from fastapi import HTTPException
 
-response = requests.get("https://51.20.105.59/API/v1/books/", verify=False)
+sresponse = requests.get("https://51.20.105.59/API/v1/books/", verify=False)
 
-# Print the response
-print(response.json())
+if response.status_code == 200:
+    try:
+        data = response.json()
+        print(data)
+    except requests.exceptions.JSONDecodeError:
+        print("Invalid JSON response:", response.text)
+else:
+    print(f"Failed to fetch data. Status code: {response.status_code}")
+
 
 
 @router.get("/{book_id}", response_model=Book, status_code=status.HTTP_200_OK)
