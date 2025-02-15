@@ -1,0 +1,20 @@
+new changes
+
+# Conflicts:
+#	.github/workflows/CI.yml
+#	.github/workflows/deploy.yml
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# interactive rebase in progress; onto 6027d32
+# Last commands done (4 commands done):
+#    pick 3c5cd1a Update  README.md
+#    pick 46d92da new changes
+# No commands remaining.
+# You are currently rebasing branch 'firstUpdate' on '6027d32'.
+#
+# Changes to be committed:
+#	modified:   README.md
+#	modified:   api/routes/books.py
+#

@@ -1,10 +1,10 @@
-# FastAPI Book Management API
+# FastAPI Book API
 
-## Overview/ Introduction
+## Introduction
 
 This project is a RESTful API built with FastAPI for managing a book collection. It provides comprehensive CRUD (Create, Read, Update, Delete) operations for books with proper error handling, input validation, and documentation.
 
-## Features/ characteristics
+## Features
 
 - 📚 Book management (CRUD operations)
 - ✅ Input validation using Pydantic models
@@ -20,11 +20,11 @@ fastapi-book-project/
 ├── api/
 │   ├── db/
 │   │   ├── __init__.py
-│   │   └── schemas.py      # Data models and in-memory database
+│   │   └── schemas.py      # Data models
 │   ├── routes/
 │   │   ├── __init__.py
-│   │   └── books.py        # Book route handlers
-│   └── router.py           # API router configuration
+│   │   └── books.py        # Book route 
+│   └── router.py           # API router 
 ├── core/
 │   ├── __init__.py
 │   └── config.py           # Application settings
@@ -36,7 +36,7 @@ fastapi-book-project/
 └── README.md
 ```
 
-## Technologies 
+## Technologies Used
 
 - Python 3.12
 - FastAPI
@@ -53,7 +53,7 @@ git clone https://github.com/hng12-devbotops/fastapi-book-project.git
 cd fastapi-book-project
 ```
 
-2. Create a virtual environment:
+2. Create a virtual environment and activate it:
 
 ```bash
 python -m venv venv
@@ -76,8 +76,8 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 2. Access the API documentation:
 
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
+- Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
+- ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
 ## API Endpoints
 
@@ -92,6 +92,10 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ### Health Check
 
 - `GET /healthcheck` - Check API status
+
+```bash
+curl http://127.0.0.1:8000/healthcheck
+```
 
 ## Book Schema
 
@@ -120,30 +124,20 @@ Available genres:
 pytest
 ```
 
-## Error Handling
-
-The API includes proper error handling for:
-
-- Non-existent books
-- Invalid book IDs
-- Invalid genre types
-- Malformed requests
-
-## Deployment Guide
+## Deployment Guide (AWS + Nginx + Gunicorn)
 
 ### 1️⃣ Connect to Your VPS
-Log into your VPS using SSH:
 ```bash
 ssh user@your-vps-ip
 ```
 
-## 2️⃣ Update & Install Dependencies
+### 2️⃣ Update & Install Dependencies
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y python3-pip python3-venv nginx git
 ```
 
-## 3️⃣ Clone Your Repository
+### 3️⃣ Clone Your Repository
 ```bash
 git clone https://github.com/YOUR_GITHUB_USERNAME/fastapi-book-project.git
 cd fastapi-book-project
@@ -159,12 +153,11 @@ pip install -r requirements.txt
 
 ### 5️⃣ Run the FastAPI App
 ```bash
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-### 6️⃣ Use a Process Manager (Gunicorn + Supervisor)
+### 6️⃣ Use a Process Manager (Gunicorn + Systemd)
 ```bash
-
 pip install gunicorn
 ```
 Create a Gunicorn service file:
@@ -181,7 +174,7 @@ After=network.target
 User=ubuntu
 Group=ubuntu
 WorkingDirectory=/home/ubuntu/fastapi-book-project
-ExecStart=/home/ubuntu/fastapi-book-project/venv/bin/gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8000
+ExecStart=/home/ubuntu/fastapi-book-project/venv/bin/gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:8000
 
 Restart=always
 RestartSec=3
@@ -195,6 +188,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable fastapi
 sudo systemctl start fastapi
 ```
+
 ### 7️⃣ Configure Nginx as a Reverse Proxy
 ```bash
 sudo nano /etc/nginx/sites-available/fastapi
@@ -219,14 +213,7 @@ sudo ln -s /etc/nginx/sites-available/fastapi /etc/nginx/sites-enabled
 sudo systemctl restart nginx
 ```
 
-### 8️⃣ Secure Server with SSL (Optional)
-```bash
-sudo apt install certbot python3-certbot-nginx -y
-sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
-sudo systemctl restart nginx
-```
-
-### 9️⃣ Automate Deployment with Git
+### 8️⃣ Automate Deployment with Git
 ```bash
 cd /home/ubuntu/fastapi-book-project
 git pull origin main
@@ -243,7 +230,5 @@ sudo systemctl restart fastapi
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
+This project is licensed under the MIT License - see the LICENSE file for details.
 
