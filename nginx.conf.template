@@ -1,0 +1,8 @@
+server {
+    listen 80;
+    server_name http://51.20.105.59/;
+
+    location / {
+        proxy_pass http://127.0.0.1:$APP_PORT;
+    }
+}
