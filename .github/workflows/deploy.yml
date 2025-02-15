@@ -4,11 +4,10 @@ on:
   pull_request:
     types:
       - closed
-    branches:
-      - main
 
 jobs:
   deploy:
+    if: github.event.pull_request.merged == true  # Ensure the PR is merged before deployment
     runs-on: ubuntu-latest
 
     steps:
@@ -16,15 +15,30 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy Application
-        uses: appleboy/ssh-action@v0.1.6
+        uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.AWS_EC2_HOST }}
+          host: ${{ secrets.AWS_EC2_HOST }}  # Ensure this is set in GitHub Secrets
           username: ubuntu
-          key: ${{ secrets.AWS_PRIVATE_KEY }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}  # Ensure your private key is set correctly
           script: |
+            echo "Starting Deployment on EC2..."
+
+            # Navigate to the project directory
             cd /home/ubuntu/fastapi-book-project
+            
+            # Pull latest changes
             git pull origin main
+            
+            # Activate virtual environment
             source venv/bin/activate
-            pip install -r requirements.txt
-            sudo systemctl restart fastapi
+            
+            # Install dependencies
+            pip install --no-cache-dir -r requirements.txt
+            
+            # Restart FastAPI service (Ensure this service name is correct)
+            sudo systemctl restart fastapi-book
+            
+            # Restart Nginx
             sudo systemctl restart nginx
+            
+            echo "Deployment Successful!"
