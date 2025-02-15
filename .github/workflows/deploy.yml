@@ -1,4 +1,4 @@
-name: CD
+name: C-D
 
 on:
   pull_request:
@@ -41,4 +41,4 @@ jobs:
             # Restart Nginx
             sudo systemctl restart nginx
             
-            echo "Deployment Successful!"
+            echo "Deployment Successful!!"
