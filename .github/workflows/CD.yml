@@ -1,12 +1,13 @@
 name: Continuous Deployment (CD)
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types:
+      - closed  # Triggers when a PR is closed (either merged or rejected)
 
 jobs:
   deploy:
+    if: github.event.pull_request.merged == true  # Only run if the PR was merged
     runs-on: ubuntu-latest
 
     steps:
