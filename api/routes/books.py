@@ -2,8 +2,11 @@ from typing import OrderedDict
 
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
+import requests
 
 from api.db.schemas import Book, Genre, InMemoryDB
+
+
 
 router = APIRouter()
 
@@ -34,6 +37,12 @@ db.books = {
 
 
 from fastapi import HTTPException
+
+response = requests.get("https://51.20.105.59/API/v1/books/", verify=False)
+
+# Print the response
+print(response.json())
+
 
 @router.get("/{book_id}", response_model=Book, status_code=status.HTTP_200_OK)
 async def get_book_by_id(book_id: int) -> Book:
