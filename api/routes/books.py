@@ -1,4 +1,5 @@
 from typing import OrderedDict
+from urllib import response
 
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
@@ -40,16 +41,14 @@ from fastapi import HTTPException
 
 sresponse = requests.get("https://51.20.105.59/API/v1/books/", verify=False)
 
-if response.status_code == 200:
-    try:
-        data = response.json()
-        print(data)
-    except requests.exceptions.JSONDecodeError:
-        print("Invalid JSON response:", response.text)
-else:
-    print(f"Failed to fetch data. Status code: {response.status_code}")
-
-
+try:
+    sresponse.raise_for_status()  # Raises an HTTPError for bad responses (4xx and 5xx)
+    print(sresponse.json())  # Only attempt .json() if the request is successful
+except requests.exceptions.JSONDecodeError:
+    print("Error: Response is not in JSON format")
+    print(sresponse.text)  # Print raw response to debug
+except requests.exceptions.RequestException as e:
+    print(f"HTTP Request Failed: {e}")
 
 @router.get("/{book_id}", response_model=Book, status_code=status.HTTP_200_OK)
 async def get_book_by_id(book_id: int) -> Book:
