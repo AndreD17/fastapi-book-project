@@ -1,13 +1,10 @@
-from typing import OrderedDict
-from urllib import response
+from collections import OrderedDict
+
 
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
-import requests
 
 from api.db.schemas import Book, Genre, InMemoryDB
-
-
 
 router = APIRouter()
 
@@ -39,27 +36,15 @@ db.books = {
 
 from fastapi import HTTPException
 
-sresponse = requests.get("https://51.20.105.59/API/v1/books/", verify=False)
-
-try:
-    sresponse.raise_for_status()  # Raises an HTTPError for bad responses (4xx and 5xx)
-    print(sresponse.json())  # Only attempt .json() if the request is successful
-except requests.exceptions.JSONDecodeError:
-    print("Error: Response is not in JSON format")
-    print(sresponse.text)  # Print raw response to debug
-except requests.exceptions.RequestException as e:
-    print(f"HTTP Request Failed: {e}")
 
 @router.get("/{book_id}", response_model=Book, status_code=status.HTTP_200_OK)
-async def get_book_by_id(book_id: int) -> Book:
+async def get_book(book_id: int) -> Book:
     book = db.get_book(book_id)
-
     if not book:
-        raise HTTPException(status_code=404, detail="Book Not found")
-
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND, content={"detail": "Book not found"}
+        )
     return book
-
-
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_book(book: Book):
@@ -89,3 +74,4 @@ async def update_book(book_id: int, book: Book) -> Book:
 async def delete_book(book_id: int) -> None:
     db.delete_book(book_id)
     return JSONResponse(status_code=status.HTTP_204_NO_CONTENT, content=None)
+s
